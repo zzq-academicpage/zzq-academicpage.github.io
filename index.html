@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ziqi-Zhao</title>
+    <style>
+        .nav {
+            background: #fff;
+            position: absolute;
+            top: 6px;
+            right: 10px;
+            padding: 0 10px;
+            text-align: right;
+            z-index: 999; 
+        }
+        .nav button {
+            padding: 6px 12px;
+            margin: 0 5px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            background: #fff;
+            transition: background-color 0.2s;
+            color: #003366;
+        }
+        .nav button:hover {
+            background-color: #f8f8f8;
+            border-radius: 4px;
+        }
+
+        .nav button span {
+            color: #000;
+        }
+        .page {
+            display: none;
+            padding: 20px;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+        #zh-page { display: none; }
+        #en-page { 
+            display: block;
+            background-color: #fff; }
+
+        html {
+            background-color: #f5f5f5;
+            min-height: 100%;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+        * {
+            font-family: "Times New Roman", Times, serif !important;
+            font-feature-settings: normal;
+            -webkit-font-smoothing: antialiased;
+            box-sizing: inherit;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            max-width: 1100px;
+            margin: 1rem auto;
+            padding: 20px 40px;
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            border-radius: 4px;
+            min-height: calc(100vh - 5rem);
+            position: relative;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid #eee;
+            min-height: auto;
+        }
+        .name-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.8rem;
+        }
+        .english-name, .chinese-name {
+            font-size: 1.8rem;
+            margin: 0;
+            font-weight: bold;
+            line-height: 1;
+        }
+        .chinese-name {
+            font-family: "SimSun", "宋体", serif !important;
+        }
+        .english-name {
+            font-family: "Times New Roman", Times, serif !important;
+        }
+        .info p {
+            margin: 0.3rem 0;
+            font-size: 1.15rem;
+            line-height: 1.6;
+        }
+        .info a {
+            color: #0066cc;
+            text-decoration: none;
+            border-bottom: 1px dotted #0066cc;
+        }
+        .info a:hover {
+            border-bottom: 1px solid #0066cc;
+        }
+        .avatar {
+            margin-right: 60px; 
+        }
+        .avatar img {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .section {
+            margin: 2rem 0;
+        }
+        .section h2 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.8rem 0;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 0.3rem;
+            font-weight: bold;
+        }
+        .research-section p {
+            margin: 0.4rem 0;
+            font-size: 1.05rem !important;
+            line-height: 1.4;
+        }
+        .research-item {
+            margin-bottom: 0.6rem;
+            font-size: 1.0rem;
+            line-height: 1.4;
+        }
+        .research-item strong {
+            font-weight: bold;
+        }
+        .research-bullet {
+            color: #000;
+            display: inline-block;
+            width: 0.8rem;
+        }
+        .intro-section p {
+            font-size: 1.05rem !important;
+            line-height: 1.5;
+        }
+        .section p {
+            font-size: 0.95rem;
+            margin-bottom: 0.8rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .publication-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.2rem;
+            align-items: center;
+        }
+        .pub-image {
+            flex: 0 0 180px;
+        }
+        .pub-image img {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border: 1px solid #eee;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .pub-content {
+            flex: 1;
+            font-size: 0.85rem;
+            line-height: 1.3;
+        }
+        .pub-content p {
+            margin: 0 0 0.6rem 0 !important;
+            padding: 0 !important;
+            line-height: 1.3 !important;
+        }
+        .pub-title {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #1D5587;
+        }
+        .pub-venue {
+            font-style: normal;
+        }
+        .pub-links a {
+            color: #1D5587;
+            text-decoration: none;
+            border-bottom: 1px dotted #1D5587;
+        }
+        .pub-links a:hover {
+            border-bottom: 1px solid #1D5587;
+        }
+        .pub-tags {
+            display: none;
+            margin-top: 0.2rem;
+            font-size: 0.75rem;
+            color: #666;
+        }
+        .news-container {
+            height: 160px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .news-container::-webkit-scrollbar {
+            width: 6px;
+        }
+        .news-container::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 3px;
+        }
+        .news-item {
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .news-date {
+            color: #0066cc;
+            cursor: pointer;
+            border-bottom: 1px dotted #0066cc;
+        }
+        .news-date:hover {
+            border-bottom: 1px solid #0066cc;
+        }
+        .news-bullet {
+            color: #000;
+            display: inline-block;
+            width: 0.8rem;
+            margin-top: 0.2rem;
+        }
+        .news-modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ddd;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 80%;
+            z-index: 1000;
+        }
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+        .modal-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .modal-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .close-btn {
+            margin-top: 15px;
+            padding: 5px 10px;
+            background: #f0f0f0;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+        .education-item {
+            margin-bottom: 0.6rem;
+            font-size: 1.0rem;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+        }
+        .education-bullet {
+            color: #000;
+            display: inline-block;
+            width: 0.8rem;
+            margin-right: 0.4rem;
+            margin-top: 0.2rem;
+        }
+        .education-content {
+            flex: 1;
+        }
+        .education-period {
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        /* 演示栏目样式 */
+        .demo-container {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 15px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .demo-scroller {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+        }
+        .demo-scroller::-webkit-scrollbar {
+            height: 8px;
+        }
+        .demo-scroller::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+        .demo-scroller::-webkit-scrollbar-track {
+            background-color: #f5f5f5;
+            border-radius: 4px;
+        }
+        .video-card {
+            flex: 0 0 auto;
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 180px; /* 固定容器高度 */
+            background: #000;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .video-player {
+            width: 100%;
+            height: 100%; /* 高度100%填充容器 */
+            object-fit: fill; /* 普通展示：拉伸填充（完全适配容器，不保持比例） */
+            background: #000;
+        }
+        .play-pause-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            z-index: 10;
+            transition: all 0.2s;
+        }
+        .play-pause-btn:hover {
+            background: rgba(0,0,0,0.8);
+        }
+        .video-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+        }
+        .progress-bar {
+            flex: 1;
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: #0066cc;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        .fullscreen-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background: #f8f8f8;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .fullscreen-btn:hover {
+            background: #eee;
+        }
+        /* 全屏视频样式 - 保留原比例 */
+        .fullscreen-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+        .fullscreen-video {
+            width: 90%;
+            height: 90%;
+            object-fit: contain; /* 全屏模式：保持原比例（可能有黑边） */
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .close-fullscreen {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .close-fullscreen:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 600px) {
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                min-height: auto;
+            }
+            .avatar {
+                margin-top: 1rem;
+                margin-right: 0;
+            }
+            .avatar img {
+                width: 140px;
+                height: 180px;
+            }
+            .name-container {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .publication-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .pub-image {
+                width: 100%;
+            }
+            .news-modal {
+                width: 90%;
+            }
+            body {
+                margin: 1.5rem auto;
+                padding: 15px 15px;
+                min-height: calc(100vh - 3rem);
+            }
+
+            .nav {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                text-align: center;
+            }
+            .page {
+                padding-top: 20px;
+            }
+            /* 移动端视频卡片适配 */
+            .video-card {
+                width: 280px;
+            }
+            .video-wrapper {
+                height: 150px; /* 移动端容器高度 */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <button onclick="showPage('zh')"><span>[</span>中文版<span>]</span></button>
+        <button onclick="showPage('en')"><span>[</span>EN<span>]</span></button>
+    </div>
+
+    <div id="zh-page" class="page">
+        <div class="header">
+            <div class="info">
+                <div class="name-container">
+                    <h1 class="chinese-name">赵子琪</h1>
+                </div>
+                <p><strong>南京信息工程大学博士研究生</strong></p>
+                <p>时空预测</p>
+                <p>多模态融合</p>
+                <p>计算机视觉</p>
+                <p>Email: ziqi.zhao.ch@gamil.com</p>
+                <p>[<a href="https://scholar.google.com">Google Scholar</a>][<a href="https://github.com/zqzhaolab">GitHub</a>]</p>
+            </div>
+            <div class="avatar">
+                <img data-img-path="imgs/profile.jpg" alt="profile">
+            </div>
+        </div>
+
+        <div class="section intro-section">
+            <h2>个人简介</h2>
+            <p>
+                我是南京信息工程大学信息与通信工程专业的一名博士生，本科和硕士分别毕业于南华大学通信工程专业和电子科学与技术专业。2021年-2022年，我在中国科学院深圳先进技术研究院进行智慧交通领域的研究。近年来，曾参与多项国家重点研发计划、国家自然科学基金等项目，也获得过博士研究生国家奖学金等荣誉。目前，在国内外学术期刊和会议上发表学术论文8篇，其中以第一作者身份发表论文4篇。
+            </p>
+            <p>
+                近期，我的研究重点是时空预测和强灾害天气预警，此外在智慧交通、优化算法等领域也开展相关研究工作。目前，开发的闪电临近预测模型已经在气象台的预警业务中实时运行测试。
+            </p>
+        </div>
+
+        <div class="section research-section">
+            <h2>研究兴趣</h2>
+            <p>近期，我的研究内容为多模态融合和时空预测。</p>
+            
+            <div class="research-item">
+                <span class="research-bullet">■</span>
+                <strong>多模态融合： </strong> 大量的气象探测设备收集了海量的气象要素数据和遥感数据。我正在研究如何有效的融合多源数据，以实现高精度的降水预测和雷暴预警。
+            </div>
+            
+            <div class="research-item">
+                <span class="research-bullet">■</span>
+                <strong>时空预测： </strong> 时空预测任务具有高度复杂特性，我在研究如何进行时空依赖关系的建模，并在交通预测、气象预测等任务中得以应用。
+            </div>
+        </div>
+
+        <div class="section research-section">
+            <h2>教育经历</h2>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2024.9至今</span>
+                    南京信息工程大学 | 信息与通信工程/环境感知与智能控制 | 工学博士
+                </div>
+            </div>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2020.9-2023.8</span>
+                    南华大学 | 电子科学与技术 | 工学硕士
+                </div>
+            </div>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2016.9-2020.6</span>
+                    南华大学 | 通信工程 | 工学学士
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>论文</h2>
+            <!-- paper8 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper8.jpg" alt="Cover of Paper 8">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">MissPred: A Robust Two-Stage Radar Echo Extrapolation Algorithm in Missing Pattern</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Chunxu Duan, Lin Song, Qilin Zhang, Wenda Zhu, Yi Liu</p>
+                    <p class="pub-venue">Remote Sensing （中科院二区）, 2025</p>
+                    <p class="pub-links">[<a href="https://www.mdpi.com/2072-4292/17/12/2066">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper7 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper7.jpg" alt="Cover of Paper 7">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">RaDiT: A Differential Transformer-Based Hybrid Deep Learning Model for Radar Echo Extrapolation</p>
+                    <p class="pub-authors">Wenda Zhu, Zhenyu Lu, Yuan Zhang, <strong>Ziqi Zhao</strong>, Bingjian Lu, Ruiyi Li</p>
+                    <p class="pub-venue">Remote Sensing （中科院二区）, 2025</p>
+                    <p class="pub-links">[<a href="https://www.mdpi.com/2072-4292/17/12/1976">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper6 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper6.jpg" alt="Cover of Paper 6">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">基于多尺度残差网络的闪电类型识别</p>
+                    <p class="pub-authors">杨俊，刘岩，李杰，<strong>赵子琪</strong>，郑猛，张其林</p>
+                    <p class="pub-venue">科学技术与工程 （北大核心，EI）, 2025</p>
+                    <p class="pub-links">[<a href="#">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper5 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper5.jpg" alt="Cover of Paper 5">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">基于图自编码器和GRU网络的分层交通流预测模型</p>
+                    <p class="pub-authors"><strong>赵子琪</strong>，杨斌，张远广</p>
+                    <p class="pub-venue">计算机科学（北大核心）, 2024</p>
+                    <p class="pub-links">[<a href="#">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper4 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper4.jpg" alt="Cover of Paper 4">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Sensing Intrusion Detection for Automatic Driving System based on Scene Semantic Centroid</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Bin Yang, Hongfeng Shu, Qi Liu, Kangshuai Zhang, Lei Peng</p>
+                    <p class="pub-venue">IEEE 25th International Conference on Intelligent Transportation Systems （智能交通领域顶级会议/清华大学A类会议）, 2022</p>
+                    <p class="pub-links">[<a href="https://ieeexplore.ieee.org/abstract/document/9922532/">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper3 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper3.jpg" alt="Cover of Paper 3">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Scene Semantic Anomaly Detection of Multi-Sensor in Autonomous Driving</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Bin Yang, Chuisheng Qian, Yuanguang Zhang</p>
+                    <p class="pub-venue">IEEE 1st International Symposium on Sensor Technology and Control （EI）, 2022</p>
+                    <p class="pub-links">[<a href="https://iopscience.iop.org/article/10.1088/1742-6596/2302/1/012005/meta">论文主页</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper2 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper2.jpg" alt="Cover of Paper 2">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">A Hierarchical Optimal Path Planning Algorithm for Collaborative Air-Ground Inspection</p>
+                    <p class="pub-authors">Yuanguang Zhang, Yuhong Zhao, <strong>Ziqi Zhao</strong>, Weiqi Tang</p>
+                    <p class="pub-venue">International Conference on Smart Transportation and City Engineering （EI）, 2022</p>
+                    <p class="pub-links">[<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12460/124603I/A-hierarchical-optimal-path-planning-algorithm-for-collaborative-air-ground/10.1117/12.2658244.short">论文主页</a>]</p>
+                </div>
+            </div>
+            
+            <!-- paper1 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper1.jpg" alt="Cover of Paper 1">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Security Analysis of SM2 Signature Algorithm Based on Fault Attack</p>
+                    <p class="pub-authors">Chuisheng Qian, Yan Wang, Minghua Wang, <strong>Ziqi Zhao</strong></p>
+                    <p class="pub-venue">International Symposium on Computer Technology and Information Science （EI）, 2022</p>
+                    <p class="pub-links">[<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12474/1247402/Security-analysis-of-SM2-signature-algorithm-based-on-fault-attack/10.1117/12.2653740.short">论文主页</a>]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 中文版演示栏目 -->
+        <div class="section">
+            <h2>演示</h2>
+            <div class="demo-container">
+                <div class="demo-scroller">
+                    <!-- 视频1 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo1.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                    <!-- 视频2 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo2.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                    <!-- 视频3 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo3.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>专利</h2>
+            <div style="font-size: 0.95rem; line-height: 1.5;">
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>一种基于麦克风阵列的雷声信号高效识别方法和系统（CN202511097674.2）  发明人：王彪; 张其林; 段春旭; <strong>赵子琪</strong>; 严玉龙; 潘兴可</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>一种基于大气电场组网数据的雷电预警方法（CN202510239611.X）  发明人：宋琳; 潘兴可; 段春旭; 张其林; <strong>赵子琪</strong>; 孟繁辉</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>异常检测方法、装置、电子设备及计算机可读存储介质（CN202210467552.8）  发明人：彭磊; 舒洪峰; <strong>赵子琪</strong>; 徐婷; 崔允端; 朱栋文</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>荣誉奖项</h2>
+            <div style="font-size: 0.95rem; line-height: 1.5;">
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>南京信息工程大学博士研究生国家奖学金</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>南京信息工程大学博士生一等奖学金</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>南京信息工程大学三好学生</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>学术服务</h2>
+            <div style="font-size: 0.95rem; line-height: 1.5;">
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Atmospheric Research 期刊审稿人</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Remote Sensing 期刊审稿人</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>IEEE 学生会员</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>中国计算机学会（CCF）学生会员</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>中国自动化学会学生会员</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="en-page" class="page">
+        <div class="header">
+            <div class="info">
+                <div class="name-container">
+                    <h1 class="english-name">Ziqi Zhao</h1>
+                    <h1 class="chinese-name">(赵子琪)</h1>
+                </div>
+                <p><strong>Phd Student at NUIST</strong></p>
+                <p>Spatio-Temporal Prediction</p>
+                <p>Computer Vision</p>
+                <p>Multimodal Fusion</p>
+                <p>Email: ziqi.zhao.ch@gamil.com</p>
+                <p>[<a href="https://scholar.google.com">Google Scholar</a>][<a href="https://github.com/zqzhaolab">GitHub</a>]</p>
+            </div>
+            <div class="avatar">
+                <img data-img-path="imgs/profile.jpg" alt="profile">
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>About me</h2>
+            <p>
+                I am a PhD student in Information and Communication Engineering at Nanjing University of Information Science and Technology. I received my bachelor's degree in Communication Engineering and my master's degree in Electronic Science and Technology, both from University of South China. From 2021 to 2022, I conducted research in the field of intelligent transportation at the Shenzhen Institute of Advanced Technology, Chinese Academy of Sciences. I have participated in multiple national key R&D programs and projects funded by the National Natural Science Foundation of China, and have been awarded honors such as the National Scholarship for Doctoral Students.
+            </p>
+            <p>
+                My research focuses on spatiotemporal prediction and severe weather forecasting, with additional work in intelligent transportation and optimization algorithms. Notably, the lightning nowcasting model I developed is currently undergoing real-time operational testing in meteorological observatory warning systems.
+            </p>
+        </div>
+
+        <div class="section research-section">
+            <h2>Research Interests</h2>
+            <p>Currently, I focus on the field of <strong>Multimodal Fusion</strong> and <strong>Spatio-Temporal Prediction</strong>.</p>
+            
+            <div class="research-item">
+                <span class="research-bullet">■</span>
+                <strong>Multimodal Fusion:</strong> A wide array of meteorological observation instruments has collected massive volumes of meteorological variable data and remote sensing data. I am currently researching effective methods to fuse these multi-source data to achieve high-accuracy precipitation forecasting and thunderstorm warning.
+            </div>
+            
+            <div class="research-item">
+                <span class="research-bullet">■</span>
+                <strong>Spatio-Temporal Prediction: </strong> Spatiotemporal prediction tasks are highly complex. My research focuses on modeling spatiotemporal dependencies and applying these methods to tasks such as traffic forecasting and meteorological prediction.
+            </div>
+        </div>
+
+        <div class="section research-section">
+            <h2>Education</h2>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2024.9-present</span>
+                    Nanjing University of Information Science and Technology | Information and Communication Engineering / Environmental Perception and Intelligent Control | Doctor of Engineering
+                </div>
+            </div>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2014.9-2020.8</span>
+                    University of South China | Electronic science and technology | Master of Engineering
+                </div>
+            </div>
+            <div class="education-item">
+                <span class="education-bullet">■</span>
+                <div class="education-content">
+                    <span class="education-period">2010.9-2014.6</span>
+                    University of South China | Communications Engineering | Bachelor of Engineering
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Publications</h2>
+            <!-- paper8 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper8.jpg" alt="Cover of Paper 8">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">MissPred: A Robust Two-Stage Radar Echo Extrapolation Algorithm in Missing Pattern</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Chunxu Duan, Lin Song, Qilin Zhang, Wenda Zhu, Yi Liu</p>
+                    <p class="pub-venue">Remote Sensing (JCR Q2), 2025</p>
+                    <p class="pub-links">[<a href="https://www.mdpi.com/2072-4292/17/12/2066">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper7 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper7.jpg" alt="Cover of Paper 7">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">RaDiT: A Differential Transformer-Based Hybrid Deep Learning Model for Radar Echo Extrapolation</p>
+                    <p class="pub-authors">Wenda Zhu, Zhenyu Lu, Yuan Zhang, <strong>Ziqi Zhao</strong>, Bingjian Lu, Ruiyi Li</p>
+                    <p class="pub-venue">Remote Sensing (JCR Q2), 2025</p>
+                    <p class="pub-links">[<a href="https://www.mdpi.com/2072-4292/17/12/1976">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper6 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper6.jpg" alt="Cover of Paper 6">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Lightning type recognition based on multi-scale residual networks</p>
+                    <p class="pub-authors">Yang Jun, Liu Yan, Li Jie, <strong>Ziqi Zhao</strong>, Meng Zheng, Qilin Zhang</p>
+                    <p class="pub-venue">Science Technology and Engineering (EI), 2025</p>
+                    <p class="pub-links">[<a href="#">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper5 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper5.jpg" alt="Cover of Paper 5">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Hierarchical Traffic Flow Prediction Model Based on Graph Autoencoder and GRU Network</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Bin Yang, Yuanguang Zhang</p>
+                    <p class="pub-venue">Computer Science, 2024</p>
+                    <p class="pub-links">[<a href="#">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper4 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper4.jpg" alt="Cover of Paper 4">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Sensing Intrusion Detection for Automatic Driving System based on Scene Semantic Centroid</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Bin Yang, Hongfeng Shu, Qi Liu, Kangshuai Zhang, Lei Peng</p>
+                    <p class="pub-venue">IEEE 25th International Conference on Intelligent Transportation Systems (Top Conference in Intelligent Transportation), 2022</p>
+                    <p class="pub-links">[<a href="https://ieeexplore.ieee.org/abstract/document/9922532/">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper3 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper3.jpg" alt="Cover of Paper 3">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Scene Semantic Anomaly Detection of Multi-Sensor in Autonomous Driving</p>
+                    <p class="pub-authors"><strong>Ziqi Zhao</strong>, Bin Yang, Chuisheng Qian, Yuanguang Zhang</p>
+                    <p class="pub-venue">IEEE 1st International Symposium on Sensor Technology and Control (EI), 2022</p>
+                    <p class="pub-links">[<a href="https://iopscience.iop.org/article/10.1088/1742-6596/2302/1/012005/meta">Paper Webpage</a>]</p>
+                </div>
+            </div>
+
+            <!-- paper2 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper2.jpg" alt="Cover of Paper 2">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">A Hierarchical Optimal Path Planning Algorithm for Collaborative Air-Ground Inspection</p>
+                    <p class="pub-authors">Yuanguang Zhang, Yuhong Zhao, <strong>Ziqi Zhao</strong>, Weiqi Tang</p>
+                    <p class="pub-venue">International Conference on Smart Transportation and City Engineering (EI), 2022</p>
+                    <p class="pub-links">[<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12460/124603I/A-hierarchical-optimal-path-planning-algorithm-for-collaborative-air-ground/10.1117/12.2658244.short">Paper Webpage</a>]</p>
+                </div>
+            </div>
+            
+            <!-- paper1 -->
+            <div class="publication-item">
+                <div class="pub-image">
+                    <img data-img-path="imgs/paper1.jpg" alt="Cover of Paper 1">
+                </div>
+                <div class="pub-content">
+                    <p class="pub-title">Security Analysis of SM2 Signature Algorithm Based on Fault Attack</p>
+                    <p class="pub-authors">Chuisheng Qian, Yan Wang, Minghua Wang, <strong>Ziqi Zhao</strong></p>
+                    <p class="pub-venue">International Symposium on Computer Technology and Information Science (EI), 2022</p>
+                    <p class="pub-links">[<a href="https://www.spiedigitallibrary.org/conference-proceedings-of-spie/12474/1247402/Security-analysis-of-SM2-signature-algorithm-based-on-fault-attack/10.1117/12.2653740.short">Paper Webpage</a>]</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 英文版演示栏目 -->
+        <div class="section">
+            <h2>Demonstration</h2>
+            <div class="demo-container">
+                <div class="demo-scroller">
+                    <!-- 视频1 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo1.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                    <!-- 视频2 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo2.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                    <!-- 视频3 -->
+                    <div class="video-card">
+                        <div class="video-wrapper">
+                            <button class="play-pause-btn">▶</button>
+                            <video class="video-player" data-video-path="imgs/demo3.mp4" muted></video>
+                        </div>
+                        <div class="video-controls">
+                            <div class="progress-bar">
+                                <div class="progress-fill"></div>
+                            </div>
+                            <button class="fullscreen-btn">⛶</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>News</h2>
+            <div class="news-container">
+                <!-- News1 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal6')">2025-07</span>
+                        <span> Our survey: AI Alignment: A Contemporary Survey has been accepted by ACM Computing Surveys</span>
+                    </div>
+                </div>
+                <!-- News2 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal5')">2025-07</span>
+                        <span> Five papers (*Spotlight, ³Poster) are accepted by NeurIPS 2025</span>
+                    </div>
+                </div>
+                <!-- News3 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal4')">2025-07</span>
+                        <span> Language Model Resist Alignment has been awarded the ACL 2025 Best Paper!</span>
+                    </div>
+                </div>
+                <!-- News4 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal3')">2024-01</span>
+                        <span> MedAligner has been accepted to The Innovation</span>
+                    </div>
+                </div>
+                <!-- News5 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal2')">2025-05</span>
+                        <span> Four papers are accepted by ACL 2025 Main</span>
+                    </div>
+                </div>
+                <!-- News6 -->
+                <div class="news-item">
+                    <span class="news-bullet">■</span>
+                    <div>
+                        <span class="news-date" onclick="openModal('modal1')">2025-05</span>
+                        <span> SAE-V has been accepted as ICML 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Honors & Awards</h2>
+            <div style="font-size: 0.95rem; line-height: 1.5;">
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>National Scholarship for Doctoral Students, Nanjing University of Information Science and Technology</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>First-Class Scholarship for Doctoral Students of Nanjing University of Information Science and Technology</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Outstanding Student of Nanjing University of Information Science and Technology</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Academic Service</h2>
+            <div style="font-size: 0.95rem; line-height: 1.5;">
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Reviewer for Atmospheric Research</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Reviewer for Remote Sensing</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Student Member of China Computer Federation (CCF)</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>IEEE Student Member</span>
+                </div>
+                <div style="margin: 0.4rem 0; display: flex; align-items: flex-start;">
+                    <span style="color: #000; display: inline-block; width: 0.8rem; margin-right: 0.4rem;">■</span>
+                    <span>Student Member of the Chinese Association of Automation</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-overlay" id="overlay" onclick="closeModal()"></div>
+        <div class="news-modal" id="modal1">
+            <div class="modal-title">AI Alignment Survey Accepted</div>
+            <div class="modal-content">
+                Our survey "AI Alignment: A Contemporary Survey" has been officially accepted by ACM Computing Surveys (Impact Factor: 28.0, ranked 1/147 in Computer Science Theory & Methods). This survey systematically reviews the latest progress in AI alignment, covering core methods, theoretical challenges, and application scenarios.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+        <div class="news-modal" id="modal2">
+            <div class="modal-title">5 Papers Accepted by NeurIPS 2025</div>
+            <div class="modal-content">
+                Five of our papers have been accepted by NeurIPS 2025, including 1 Spotlight paper and 3 Poster papers. The accepted works cover topics such as large model alignment, physical reasoning, and safety evaluation.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+        <div class="news-modal" id="modal3">
+            <div class="modal-title">ACL 2025 Best Paper Award</div>
+            <div class="modal-content">
+                Our paper "Language Model Resist Alignment" has been awarded the Best Paper of ACL 2025. This work proposes a novel framework to analyze the resistance of large language models to alignment operations, providing new insights for AI safety research.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+        <div class="news-modal" id="modal4">
+            <div class="modal-title">MedAligner Accepted to The Innovation</div>
+            <div class="modal-content">
+                Our work "MedAligner" has been accepted by The Innovation (Impact Factor: 32.1). MedAligner is a medical large model alignment tool that improves the safety and accuracy of LMs in clinical application scenarios.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+        <div class="news-modal" id="modal5">
+            <div class="modal-title">4 Papers in ACL 2025 Main Track</div>
+            <div class="modal-content">
+                Four of our papers have been accepted by the main track of ACL 2025, covering areas such as multimodal alignment, low-resource NLP, and ethical NLP. This marks our continuous research progress in natural language processing.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+        <div class="news-modal" id="modal6">
+            <div class="modal-title">SAE-V Accepted by ICML 2025</div>
+            <div class="modal-content">
+                Our paper "SAE-V: Sparse Autoencoder for Alignment Verification" has been accepted by ICML 2025. This work proposes a sparse autoencoder-based method to verify the effectiveness of large model alignment, reducing the cost of alignment evaluation.
+            </div>
+            <button class="close-btn" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <!-- 全屏视频容器 -->
+    <div class="fullscreen-overlay" id="fullscreenOverlay">
+        <button class="close-fullscreen" id="closeFullscreen">×</button>
+        <video class="fullscreen-video" id="fullscreenVideo" controls></video>
+    </div>
+
+    <script>
+        function showPage(lang) {
+            document.getElementById('zh-page').style.display = 'none';
+            document.getElementById('en-page').style.display = 'none';
+            document.getElementById(lang + '-page').style.display = 'block';
+        }
+
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+        }
+        function closeModal() {
+            const modals = document.querySelectorAll(".news-modal");
+            modals.forEach(modal => modal.style.display = "none");
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        window.onload = function() {
+            const ROOT_PATH = ""; 
+            // 加载图片
+            const imgElements = document.querySelectorAll('img[data-img-path]');
+            imgElements.forEach(img => {
+                const relativePath = img.getAttribute('data-img-path');
+                img.src = ROOT_PATH + relativePath;
+            });
+
+            // 加载视频
+            const videoElements = document.querySelectorAll('video[data-video-path]');
+            videoElements.forEach(video => {
+                const relativePath = video.getAttribute('data-video-path');
+                video.src = ROOT_PATH + relativePath;
+            });
+
+            // 初始化视频控制
+            initVideoControls();
+        };
+
+        // 初始化视频控制功能
+        function initVideoControls() {
+            const playPauseBtns = document.querySelectorAll('.play-pause-btn');
+            const progressBars = document.querySelectorAll('.progress-bar');
+            const fullscreenBtns = document.querySelectorAll('.fullscreen-btn');
+            const fullscreenOverlay = document.getElementById('fullscreenOverlay');
+            const fullscreenVideo = document.getElementById('fullscreenVideo');
+            const closeFullscreen = document.getElementById('closeFullscreen');
+
+            // 播放/暂停按钮
+            playPauseBtns.forEach((btn, index) => {
+                const video = btn.nextElementSibling;
+                btn.addEventListener('click', () => {
+                    if (video.paused) {
+                        video.play();
+                        btn.textContent = '❚❚';
+                    } else {
+                        video.pause();
+                        btn.textContent = '▶';
+                    }
+                });
+
+                // 视频结束时重置按钮
+                video.addEventListener('ended', () => {
+                    btn.textContent = '▶';
+                    video.currentTime = 0;
+                    updateProgress(video, 0);
+                });
+
+                // 实时更新进度条
+                video.addEventListener('timeupdate', () => {
+                    const progress = (video.currentTime / video.duration) * 100;
+                    updateProgress(video, progress);
+                });
+            });
+
+            // 进度条点击控制
+            progressBars.forEach(bar => {
+                bar.addEventListener('click', (e) => {
+                    const video = bar.closest('.video-card').querySelector('.video-player');
+                    const rect = bar.getBoundingClientRect();
+                    const pos = (e.clientX - rect.left) / rect.width;
+                    video.currentTime = pos * video.duration;
+                    updateProgress(video, pos * 100);
+                });
+            });
+
+            // 全屏按钮
+            fullscreenBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const video = btn.closest('.video-card').querySelector('.video-player');
+                    fullscreenVideo.src = video.src;
+                    fullscreenVideo.currentTime = video.currentTime;
+                    fullscreenOverlay.style.display = 'flex';
+                    fullscreenVideo.play();
+                });
+            });
+
+            // 关闭全屏
+            closeFullscreen.addEventListener('click', () => {
+                fullscreenOverlay.style.display = 'none';
+                fullscreenVideo.pause();
+            });
+
+            // 点击全屏背景关闭
+            fullscreenOverlay.addEventListener('click', (e) => {
+                if (e.target === fullscreenOverlay) {
+                    fullscreenOverlay.style.display = 'none';
+                    fullscreenVideo.pause();
+                }
+            });
+        }
+
+        // 更新进度条
+        function updateProgress(video, progress) {
+            const progressFill = video.closest('.video-card').querySelector('.progress-fill');
+            if (progressFill) {
+                progressFill.style.width = `${progress}%`;
+            }
+        }
+    </script>
+</body>
+</html>
